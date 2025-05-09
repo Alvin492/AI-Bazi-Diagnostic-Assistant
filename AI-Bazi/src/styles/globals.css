@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 自定义全局样式 */
+@layer base {
+  html {
+    font-family: system-ui, sans-serif;
+  }
+}
+
+/* 自定义动画类 */
+@layer utilities {
+  .animate-delay-200 {
+    animation-delay: 200ms;
+  }
+  .animate-delay-400 {
+    animation-delay: 400ms;
+  }
+  .animate-delay-600 {
+    animation-delay: 600ms;
+  }
+}
