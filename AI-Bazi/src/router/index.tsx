@@ -4,6 +4,8 @@ import NotFound from '../components/NotFound';
 import Layout from '../components/Layout';
 import SplashScreen from '../components/SplashScreen';
 import Profile from '../pages/Profile';
+import Post from '../pages/lmy/Post'
+
 const route = createBrowserRouter([
     {
         path:"/",
@@ -20,6 +22,10 @@ const route = createBrowserRouter([
             {
                 path:"profile",
                 element:<Profile></Profile>
+            },
+            {
+                path:"post",
+                element:<Post></Post>
             }
         ]
     }, 
