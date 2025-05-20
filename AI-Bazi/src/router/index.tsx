@@ -4,8 +4,10 @@ import NotFound from '../components/NotFound';
 import Layout from '../components/Layout';
 import SplashScreen from '../components/SplashScreen';
 import Profile from '../pages/Profile';
-import Post from '../pages/lmy/Post'
-import Taro from "../pages/Taro"
+import Post from '../pages/lmy/Post';
+import Taro from "../pages/Taro";
+import OrderRecord from "../pages/OrderRecord";
+
 const route = createBrowserRouter([
     {
         path:"/",
@@ -27,7 +29,10 @@ const route = createBrowserRouter([
                 path:"post",
                 element:<Post></Post>
             },
-           
+            {
+                path:"order-record",
+                element:<OrderRecord></OrderRecord>
+            }
         ]
     }, 
     {
@@ -39,4 +44,5 @@ const route = createBrowserRouter([
         element:<NotFound></NotFound>
     }
 ])
+
 export default route
