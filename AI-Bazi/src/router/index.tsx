@@ -4,6 +4,9 @@ import NotFound from '../components/NotFound';
 import Layout from '../components/Layout';
 import SplashScreen from '../components/SplashScreen';
 import Profile from '../pages/Profile';
+
+//yl
+import App from "../App";
 const route = createBrowserRouter([
     {
         path:"/",
@@ -26,6 +29,11 @@ const route = createBrowserRouter([
     {
         path:"*",
         element:<NotFound></NotFound>
+    },
+  
+    {
+        path:"/chat",
+        element:<App></App>
     }
 ])
 export default route
