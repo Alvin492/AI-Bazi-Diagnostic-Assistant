@@ -4,8 +4,8 @@ import NotFound from '../components/NotFound';
 import Layout from '../components/Layout';
 import SplashScreen from '../components/SplashScreen';
 import Profile from '../pages/Profile';
-
-//yl
+import Post from '../pages/lmy/Post'
+import Taro from "../pages/Taro"
 import App from "../App";
 const route = createBrowserRouter([
     {
@@ -23,9 +23,18 @@ const route = createBrowserRouter([
             {
                 path:"profile",
                 element:<Profile></Profile>
-            }
+            },
+            {
+                path:"post",
+                element:<Post></Post>
+            },
+           
         ]
     }, 
+    {
+        path:"/tarot",
+        element:<Taro></Taro>
+    },
     {
         path:"*",
         element:<NotFound></NotFound>

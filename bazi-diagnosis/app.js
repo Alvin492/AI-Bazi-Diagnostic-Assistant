@@ -11,7 +11,6 @@ const authRouter = require('./routes/auth');
 const baziRouter = require('./routes/bazi');
 const paymentRouter = require('./routes/payment');
 var sessionsRouter = require('./routes/sessions');
-
 // 引入中间件
 const { authMiddleware, authErrorHandler } = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
@@ -43,7 +42,6 @@ app.use('/api/sessions', sessionsRouter);
 app.use('/api/auth', authRouter); // 认证路由本身不需要认证，考虑将其放在 authMiddleware 之前
 app.use('/api/bazi', baziRouter);
 app.use('/api/payment', paymentRouter);
-
 // 自定义通用错误处理中间件 (捕获其他未处理的错误并返回 JSON)
 app.use(errorHandler);
 

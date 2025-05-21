@@ -35,7 +35,7 @@ function App() {
         if (sessions.length === 0) {
           const newSession = await createChatSession('新会话 1', model);
           setSessions([newSession]);
-          setCurrentSessionId(newSession._id);
+          setCurrentSessionId(newSession.id);
           
           // 创建本地会话对象
           const localConversation = {
@@ -104,7 +104,7 @@ function App() {
         const session = await getChatSession(currentSessionId);
         // 创建本地会话对象
         const localConversation = {
-          id: session._id,
+          id: session.id,
           title: session.title,
           messages: session.messages,
           model: session.model
@@ -138,10 +138,10 @@ function App() {
 
       const newSession = await createChatSession(sessionTitle, model);
       setSessions([...sessions, newSession]);
-      setCurrentSessionId(newSession._id);
+      setCurrentSessionId(newSession.id);
       
       const localConversation = {
-        id: newSession._id,
+        id: newSession.id,
         title: newSession.title,
         messages: [],
         model: newSession.model
@@ -187,11 +187,11 @@ function App() {
           const sessionTitle = `${formattedDate} ${formattedTime}`;
 
           const newSession = await createChatSession(sessionTitle, model);
-          sessionId = newSession._id;
-          conversationId = newSession._id;
+          sessionId = newSession.id;
+          conversationId = newSession.id;
 
           const localConversation = {
-            id: newSession._id,
+            id: newSession.id,
             title: newSession.title,
             messages: [],
             model: newSession.model
@@ -199,8 +199,8 @@ function App() {
 
           setSessions([...sessions, newSession]);
           setConversations([localConversation]);
-          setCurrentSessionId(newSession._id);
-          setCurrentConversation(newSession._id);
+          setCurrentSessionId(newSession.id);
+          setCurrentConversation(newSession.id);
         } catch (error) {
           console.error('创建新会话失败', error);
           message.error('创建新会话失败');
@@ -340,7 +340,7 @@ function App() {
       
       // 更新本地会话列表
       setSessions(sessions.map(session => {
-        if (session._id === conv.id) {
+        if (session.id === conv.id) {
           return { ...session, title: tempTitle }
         }
         return session
@@ -384,24 +384,22 @@ function App() {
       onOk: async () => {
         try {
           await deleteChatSession(id);
-          
-          // 更新本地会话列表
-          const updatedSessions = sessions.filter(session => session._id !== id);
-          setSessions(updatedSessions);
-          
-          // 更新本地对话
-          setConversations(conversations.filter(c => c.id !== id));
-          
-          // 如果删除的是当前会话，设置新的当前会话
-          if (currentSessionId === id) {
-            if (updatedSessions.length > 0) {
-              setCurrentSessionId(updatedSessions[0]._id);
-            } else {
-              setCurrentSessionId(null);
-              setCurrentConversation(null);
-            }
+
+          // 删除后重新拉取会话列表，保证和后端同步
+          const sessions = await getChatSessions();
+          setSessions(sessions);
+
+          // 如果还有会话，切换到第一个；否则清空当前会话
+          if (sessions.length > 0) {
+            setCurrentSessionId(sessions[0].id);
+          } else {
+            setCurrentSessionId(null);
+            setCurrentConversation(null);
           }
-          
+
+          // conversations 也可以清空或重置
+          setConversations(conversations.filter(c => c.id !== id));
+
           message.success('删除成功');
         } catch (error) {
           console.error('删除会话失败', error);
@@ -444,21 +442,21 @@ function App() {
             ) : Array.isArray(sessions) ? (
               sessions.map(session => (
                 <div
-                  key={session._id}
-                  onClick={() => setCurrentSessionId(session._id)}
+                  key={session.id}
+                  onClick={() => setCurrentSessionId(session.id)}
                   style={{
                     padding: '12px',
                     margin: '4px 0',
                     cursor: 'pointer',
                     borderRadius: '6px',
-                    background: currentSessionId === session._id ? '#e6f4ff' : 'transparent',
+                    background: currentSessionId === session.id ? '#e6f4ff' : 'transparent',
                     transition: 'all 0.3s',
                     display: 'flex',
                     justifyContent: 'space-between',
                     alignItems: 'center'
                   }}
                 >
-                  {editingTitle === session._id ? (
+                  {editingTitle === session.id ? (
                     <div 
                       style={{ 
                         display: 'flex', 
@@ -506,7 +504,7 @@ function App() {
                           onClick={(e) => {
                             e.stopPropagation();
                             setTempTitle(session.title);
-                            setEditingTitle(session._id);
+                            setEditingTitle(session.id);
                           }}
                         />
                         <Button
@@ -515,7 +513,8 @@ function App() {
                           icon={<DeleteOutlined />}
                           onClick={(e) => {
                             e.stopPropagation();
-                            handleDeleteSession(session._id);
+                            handleDeleteSession(session.id);
+                            
                           }}
                         />
                       </div>
