@@ -17,6 +17,7 @@
     "@uppy/file-input": "^4.1.2",
     "@uppy/progress-bar": "^4.2.1",
     "@uppy/react": "^4.2.3",
+    "@types/react-router-dom": "^5.3.3",
     "antd": "^5.25.1",
     "axios": "^1.9.0",
     "dayjs": "^1.11.13",
@@ -29,7 +30,9 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^15.5.1",
-    "react-router": "^7.5.3"
+    "react-markdown": "^10.1.0",
+    "react-router": "^7.5.3",
+    "react-router-dom": "^7.6.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",

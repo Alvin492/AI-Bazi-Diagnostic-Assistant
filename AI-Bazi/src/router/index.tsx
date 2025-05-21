@@ -6,6 +6,7 @@ import SplashScreen from '../components/SplashScreen';
 import Profile from '../pages/Profile';
 import Post from '../pages/lmy/Post'
 import Taro from "../pages/Taro"
+import App from "../App";
 const route = createBrowserRouter([
     {
         path:"/",
@@ -37,6 +38,11 @@ const route = createBrowserRouter([
     {
         path:"*",
         element:<NotFound></NotFound>
+    },
+  
+    {
+        path:"/chat",
+        element:<App></App>
     }
 ])
 export default route
