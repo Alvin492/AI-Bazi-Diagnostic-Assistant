@@ -77,7 +77,7 @@ export async function sendMessage(content: string, model: string = 'deepseek-cha
 // 获取所有聊天会话
 export async function getChatSessions(): Promise<ChatSession[]> {
   try {
-    const response = await api.get('/sessions');
+    const response = await api.get('/api/sessions');
     return response.data;
   } catch (error) {
     console.error('获取聊天会话失败', error);
@@ -88,7 +88,7 @@ export async function getChatSessions(): Promise<ChatSession[]> {
 // 获取特定聊天会话详情
 export async function getChatSession(sessionId: string): Promise<ChatSession> {
   try {
-    const response = await api.get(`/sessions/${sessionId}`);
+    const response = await api.get(`/api/sessions/${sessionId}`);
     return response.data;
   } catch (error) {
     console.error('获取聊天会话详情失败', error);
@@ -99,7 +99,7 @@ export async function getChatSession(sessionId: string): Promise<ChatSession> {
 // 创建新的聊天会话
 export async function createChatSession(title: string, model: string): Promise<ChatSession> {
   try {
-    const response = await api.post('/sessions', { title, model });
+    const response = await api.post('/api/sessions', { title, model });
     return response.data;
   } catch (error) {
     console.error('创建聊天会话失败', error);
@@ -110,7 +110,7 @@ export async function createChatSession(title: string, model: string): Promise<C
 // 更新聊天会话标题
 export async function updateChatSessionTitle(sessionId: string, title: string): Promise<ChatSession> {
   try {
-    const response = await api.put(`/sessions/${sessionId}`, { title });
+    const response = await api.put(`/api/sessions/${sessionId}`, { title });
     return response.data;
   } catch (error) {
     console.error('更新聊天会话标题失败', error);
@@ -121,7 +121,7 @@ export async function updateChatSessionTitle(sessionId: string, title: string): 
 // 删除聊天会话
 export async function deleteChatSession(sessionId: string): Promise<void> {
   try {
-    await api.delete(`/sessions/${sessionId}`);
+    await api.delete(`/api/sessions/${sessionId}`);
   } catch (error) {
     console.error('删除聊天会话失败', error);
     throw error;
